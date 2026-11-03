@@ -52,56 +52,56 @@ final class ViewFactory
     /**
      * addLocation
      */
-    public function addLocation(/* ... */): mixed
+    public function addLocation()
     {
-        return $this;
+        return null;
     }
     /**
      * addNamespace
      */
-    public function addNamespace(/* ... */): mixed
+    public function addNamespace()
     {
-        return $this;
+        return null;
     }
     /**
      * component
      */
-    public function component(/* ... */): mixed
+    public function component()
     {
         return null;
     }
     /**
      * composer
      */
-    public function composer(/* ... */): mixed
+    public function composer()
     {
         return null;
     }
     /**
      * directive
      */
-    public function directive(/* ... */): mixed
+    public function directive()
     {
         return null;
     }
     /**
      * file
      */
-    public function file(/* ... */): mixed
+    public function file(string $key)
     {
         return null;
     }
     /**
      * first
      */
-    public function first(/* ... */): mixed
+    public function first()
     {
         return null;
     }
     /**
      * renderEach
      */
-    public function renderEach(/* ... */): mixed
+    public function renderEach()
     {
         return null;
     }

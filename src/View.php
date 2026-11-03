@@ -79,21 +79,21 @@ final class View
     /**
      * extends
      */
-    public function extends(/* ... */): mixed
+    public function extends()
     {
         return null;
     }
     /**
      * nest
      */
-    public function nest(/* ... */): mixed
+    public function nest()
     {
         return null;
     }
     /**
      * section
      */
-    public function section(/* ... */): mixed
+    public function section()
     {
         return null;
     }

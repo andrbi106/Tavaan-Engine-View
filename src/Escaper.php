@@ -33,7 +33,7 @@ final class Escaper
     /**
      * css
      */
-    public function css(/* ... */): mixed
+    public function css()
     {
         return null;
     }
