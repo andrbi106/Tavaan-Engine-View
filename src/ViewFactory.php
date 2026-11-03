@@ -52,57 +52,69 @@ final class ViewFactory
     /**
      * addLocation
      */
-    public function addLocation()
+    public function addLocation(string $location): self
     {
-        return null;
+        $this->viewPath = $location;
+        return $this;
     }
     /**
      * addNamespace
      */
-    public function addNamespace()
+    public function addNamespace(string $namespace, string $hint): self
     {
-        return null;
+        $this->namespaces[$namespace] = $hint;
+        return $this;
     }
     /**
      * component
      */
-    public function component()
+    public function component(string $name, string $class): self
     {
-        return null;
+        $this->components[$name] = $class;
+        return $this;
     }
     /**
      * composer
      */
-    public function composer()
+    public function composer(string $view, callable $callback): self
     {
-        return null;
+        $this->composers[$view] = $callback;
+        return $this;
     }
     /**
      * directive
      */
-    public function directive()
+    public function directive(string $name, callable $callback): self
     {
-        return null;
+        $this->directives[$name] = $callback;
+        return $this;
     }
     /**
      * file
      */
-    public function file(string $key)
+    public function file(string $key): string
     {
-        return null;
+        return $this->viewPath . "/" . $key;
     }
     /**
      * first
      */
-    public function first()
+    public function first(array $views): ?string
     {
+        foreach ($views as $view) {
+            if ($this->exists($view)) return $view;
+        }
         return null;
     }
     /**
      * renderEach
      */
-    public function renderEach()
+    public function renderEach(string $view, array $data, string $iterator = "item"): string
     {
-        return null;
+        $result = "";
+        foreach ($data as $item) {
+            $result .= $this->make($view, [$iterator => $item])->render();
+        }
+        return $result;
     }
 }

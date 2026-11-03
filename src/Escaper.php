@@ -33,8 +33,9 @@ final class Escaper
     /**
      * css
      */
-    public function css()
+    public function css(mixed $value): string
     {
-        return null;
+        $escaped = self::html($value);
+        return str_replace(["<", ">", "&", '"'], ["\3C ", "\3E ", "\26 ", "\22 "], $escaped);
     }
 }

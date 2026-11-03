@@ -79,22 +79,25 @@ final class View
     /**
      * extends
      */
-    public function extends()
+    public function extends(string $layout): self
     {
-        return null;
+        $this->layout = $layout;
+        return $this;
     }
     /**
      * nest
      */
-    public function nest()
+    public function nest(string $name, string $view, array $data = []): self
     {
-        return null;
+        $this->data[$name] = (new View($view, $data))->render();
+        return $this;
     }
     /**
      * section
      */
-    public function section()
+    public function section(string $name, string $content): self
     {
-        return null;
+        $this->sections[$name] = $content;
+        return $this;
     }
 }
