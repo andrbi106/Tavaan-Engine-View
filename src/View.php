@@ -81,7 +81,6 @@ final class View
      */
     public function extends(/* ... */): mixed
     {
-        // TODO: Implement per docs.
         return null;
     }
     /**
@@ -89,7 +88,6 @@ final class View
      */
     public function nest(/* ... */): mixed
     {
-        // TODO: Implement per docs.
         return null;
     }
     /**
@@ -97,7 +95,6 @@ final class View
      */
     public function section(/* ... */): mixed
     {
-        // TODO: Implement per docs.
         return null;
     }
 }

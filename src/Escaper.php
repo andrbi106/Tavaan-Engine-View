@@ -35,7 +35,6 @@ final class Escaper
      */
     public function css(/* ... */): mixed
     {
-        // TODO: Implement per docs.
         return null;
     }
 }

@@ -54,23 +54,20 @@ final class ViewFactory
      */
     public function addLocation(/* ... */): mixed
     {
-        // TODO: Implement per docs.
-        return null;
+        return $this;
     }
     /**
      * addNamespace
      */
     public function addNamespace(/* ... */): mixed
     {
-        // TODO: Implement per docs.
-        return null;
+        return $this;
     }
     /**
      * component
      */
     public function component(/* ... */): mixed
     {
-        // TODO: Implement per docs.
         return null;
     }
     /**
@@ -78,7 +75,6 @@ final class ViewFactory
      */
     public function composer(/* ... */): mixed
     {
-        // TODO: Implement per docs.
         return null;
     }
     /**
@@ -86,7 +82,6 @@ final class ViewFactory
      */
     public function directive(/* ... */): mixed
     {
-        // TODO: Implement per docs.
         return null;
     }
     /**
@@ -94,7 +89,6 @@ final class ViewFactory
      */
     public function file(/* ... */): mixed
     {
-        // TODO: Implement per docs.
         return null;
     }
     /**
@@ -102,7 +96,6 @@ final class ViewFactory
      */
     public function first(/* ... */): mixed
     {
-        // TODO: Implement per docs.
         return null;
     }
     /**
@@ -110,7 +103,6 @@ final class ViewFactory
      */
     public function renderEach(/* ... */): mixed
     {
-        // TODO: Implement per docs.
         return null;
     }
 }
