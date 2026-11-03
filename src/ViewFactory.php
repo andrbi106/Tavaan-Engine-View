@@ -4,119 +4,48 @@ declare(strict_types=1);
 
 namespace Tavaan\Engine\View;
 
-use Tavaan\Core\Contracts\Config\RepositoryInterface as Config;
-
 /**
- * ViewFactory — پیاده‌سازی اصلی موتور.
- *
- * @see \Tavaan\Engine\View\Contracts\ViewFactoryInterface
+ * ViewFactory — ساخت و مدیریت ویوها.
  */
-final class ViewFactory implements Contracts\ViewFactoryInterface
+final class ViewFactory
 {
     /**
-     * @param Config $config پیکربندی موتور
+     * @var array<string, string>
      */
+    private array $sharedData = [];
+
     public function __construct(
-        private readonly Config $config,
+        private readonly string $viewPath = 'views',
+        private readonly ?string $compiledPath = null,
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function make(/* ... */): mixed
+    public function make(string $template, array $data = []): View
     {
-        // TODO: پیاده‌سازی make مطابق مستندات (سند §3 API).
-        return null;
+        $file = $this->resolveTemplate($template);
+        $data = \array_merge($this->sharedData, $data);
+        return new View($file, $data);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function share(/* ... */): mixed
+    public function share(string $key, mixed $value): self
     {
-        // TODO: پیاده‌سازی share مطابق مستندات (سند §3 API).
-        return null;
+        $this->sharedData[$key] = $value;
+        return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function exists(/* ... */): mixed
+    public function exists(string $template): bool
     {
-        // TODO: پیاده‌سازی exists مطابق مستندات (سند §3 API).
-        return null;
+        return \file_exists($this->resolveTemplate($template));
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function addNamespace(/* ... */): mixed
+    private function resolveTemplate(string $template): string
     {
-        // TODO: پیاده‌سازی addNamespace مطابق مستندات (سند §3 API).
-        return null;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function addLocation(/* ... */): mixed
-    {
-        // TODO: پیاده‌سازی addLocation مطابق مستندات (سند §3 API).
-        return null;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function directive(/* ... */): mixed
-    {
-        // TODO: پیاده‌سازی directive مطابق مستندات (سند §3 API).
-        return null;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function composer(/* ... */): mixed
-    {
-        // TODO: پیاده‌سازی composer مطابق مستندات (سند §3 API).
-        return null;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function component(/* ... */): mixed
-    {
-        // TODO: پیاده‌سازی component مطابق مستندات (سند §3 API).
-        return null;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function renderEach(/* ... */): mixed
-    {
-        // TODO: پیاده‌سازی renderEach مطابق مستندات (سند §3 API).
-        return null;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function file(/* ... */): mixed
-    {
-        // TODO: پیاده‌سازی file مطابق مستندات (سند §3 API).
-        return null;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function first(/* ... */): mixed
-    {
-        // TODO: پیاده‌سازی first مطابق مستندات (سند §3 API).
-        return null;
+        if (\is_file($template)) return $template;
+        // Look in viewPath
+        $file = \rtrim($this->viewPath, '/') . '/' . $template;
+        if (\is_file($file)) return $file;
+        $file .= '.tv.php';
+        if (\is_file($file)) return $file;
+        return $template;  // may be inline template
     }
 }

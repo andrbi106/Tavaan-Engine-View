@@ -4,65 +4,29 @@ declare(strict_types=1);
 
 namespace Tavaan\Engine\View;
 
-use Tavaan\Core\Contracts\Config\RepositoryInterface as Config;
-
 /**
- * Escaper — پیاده‌سازی اصلی موتور.
- *
- * @see \Tavaan\Engine\View\Contracts\EscaperInterface
+ * Escaper — escape ایمن برای HTML/Attribute/JS/URL.
  */
-final class Escaper implements Contracts\EscaperInterface
+final class Escaper
 {
-    /**
-     * @param Config $config پیکربندی موتور
-     */
-    public function __construct(
-        private readonly Config $config,
-    ) {
+    public static function html(mixed $value): string
+    {
+        return \htmlspecialchars((string) $value, \ENT_QUOTES, 'UTF-8');
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function html(/* ... */): mixed
+    public static function attr(mixed $value): string
     {
-        // TODO: پیاده‌سازی html مطابق مستندات (سند §3 API).
-        return null;
+        return \htmlspecialchars((string) $value, \ENT_QUOTES, 'UTF-8');
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function attr(/* ... */): mixed
+    public static function js(mixed $value): string
     {
-        // TODO: پیاده‌سازی attr مطابق مستندات (سند §3 API).
-        return null;
+        $json = \json_encode($value, \JSON_HEX_TAG | \JSON_HEX_APOS | \JSON_HEX_QUOT | \JSON_HEX_AMP | \JSON_UNESCAPED_UNICODE);
+        return $json === false ? '' : $json;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function js(/* ... */): mixed
+    public static function url(mixed $value): string
     {
-        // TODO: پیاده‌سازی js مطابق مستندات (سند §3 API).
-        return null;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function url(/* ... */): mixed
-    {
-        // TODO: پیاده‌سازی url مطابق مستندات (سند §3 API).
-        return null;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function css(/* ... */): mixed
-    {
-        // TODO: پیاده‌سازی css مطابق مستندات (سند §3 API).
-        return null;
+        return \rawurlencode((string) $value);
     }
 }

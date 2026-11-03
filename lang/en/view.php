@@ -1,10 +1,1 @@
-<?php
-
-declare(strict_types=1);
-
-/*| پیام‌های en برای موتور view */
-
-return [
-    'error_default' => 'Unknown error (view)',
-    'not_configured' => 'Engine not configured (view)',
-];
+<?php return ["error_template" => "Template not found.", "error_compile" => "Template compilation failed."];

@@ -4,83 +4,75 @@ declare(strict_types=1);
 
 namespace Tavaan\Engine\View;
 
-use Tavaan\Core\Contracts\Config\RepositoryInterface as Config;
-
 /**
- * View — پیاده‌سازی اصلی موتور.
+ * View — یک نمونه ویو قابل render.
  *
- * @see \Tavaan\Engine\View\Contracts\ViewInterface
+ * @see docs/03-engines/view.md
  */
-final class View implements Contracts\ViewInterface
+final class View
 {
     /**
-     * @param Config $config پیکربندی موتور
+     * @param array<string, mixed> $data
      */
     public function __construct(
-        private readonly Config $config,
+        private string $template,
+        private array $data = [],
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function render(/* ... */): mixed
+    public function with(string $key, mixed $value): self
     {
-        // TODO: پیاده‌سازی render مطابق مستندات (سند §3 API).
-        return null;
+        $this->data[$key] = $value;
+        return $this;
     }
 
     /**
-     * {@inheritdoc}
+     * @param array<string, mixed> $data
      */
-    public function with(/* ... */): mixed
+    public function withData(array $data): self
     {
-        // TODO: پیاده‌سازی with مطابق مستندات (سند §3 API).
-        return null;
+        $this->data = \array_merge($this->data, $data);
+        return $this;
+    }
+
+    public function render(): string
+    {
+        // If template is a file path, load it
+        if (\is_file($this->template)) {
+            $content = (string) \file_get_contents($this->template);
+        } else {
+            $content = $this->template;
+        }
+        // Compile
+        $compiler = new TemplateCompiler();
+        $compiled = $compiler->compile($content);
+        // Render in isolated scope
+        \extract($this->data, \EXTR_SKIP);
+        \ob_start();
+        try {
+            \eval('?>' . $compiled);
+        } catch (\Throwable $e) {
+            \ob_end_clean();
+            throw new Exceptions\ViewException("View render failed: " . $e->getMessage(), 0, $e);
+        }
+        return (string) \ob_get_clean();
+    }
+
+    public function __toString(): string
+    {
+        return $this->render();
+    }
+
+    public function getName(): string
+    {
+        return $this->template;
     }
 
     /**
-     * {@inheritdoc}
+     * @return array<string, mixed>
      */
-    public function withData(/* ... */): mixed
+    public function getData(): array
     {
-        // TODO: پیاده‌سازی withData مطابق مستندات (سند §3 API).
-        return null;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getData(/* ... */): mixed
-    {
-        // TODO: پیاده‌سازی getData مطابق مستندات (سند §3 API).
-        return null;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function nest(/* ... */): mixed
-    {
-        // TODO: پیاده‌سازی nest مطابق مستندات (سند §3 API).
-        return null;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function extends(/* ... */): mixed
-    {
-        // TODO: پیاده‌سازی extends مطابق مستندات (سند §3 API).
-        return null;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function section(/* ... */): mixed
-    {
-        // TODO: پیاده‌سازی section مطابق مستندات (سند §3 API).
-        return null;
+        return $this->data;
     }
 }
