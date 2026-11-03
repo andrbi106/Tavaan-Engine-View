@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tavaan\Engine\View\Tests\Unit;
 
-use PHPUnit\Framework\TestCase;
+use Tavaan\Testing\TestCase;
 use Tavaan\Engine\View\View;
 use Tavaan\Engine\View\ViewFactory;
 use Tavaan\Engine\View\Escaper;
