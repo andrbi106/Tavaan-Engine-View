@@ -1,0 +1,17 @@
+{
+    "name": "andrbi106/tavaan-engine-view",
+    "description": "Tavaan View engine — قالب‌ساز",
+    "type": "library",
+    "license": "MIT",
+    "require": {
+        "php": ">=8.2.0",
+        "andrbi106/tavaan-engine-core": "dev-main"
+    },
+    "autoload": {
+        "psr-4": {
+            "Tavaan\\Engine\\View\\": "src/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
