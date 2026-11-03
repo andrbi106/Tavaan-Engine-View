@@ -29,4 +29,13 @@ final class Escaper
     {
         return \rawurlencode((string) $value);
     }
+
+    /**
+     * css
+     */
+    public function css(/* ... */): mixed
+    {
+        // TODO: Implement per docs.
+        return null;
+    }
 }

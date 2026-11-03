@@ -48,4 +48,69 @@ final class ViewFactory
         if (\is_file($file)) return $file;
         return $template;  // may be inline template
     }
+
+    /**
+     * addLocation
+     */
+    public function addLocation(/* ... */): mixed
+    {
+        // TODO: Implement per docs.
+        return null;
+    }
+    /**
+     * addNamespace
+     */
+    public function addNamespace(/* ... */): mixed
+    {
+        // TODO: Implement per docs.
+        return null;
+    }
+    /**
+     * component
+     */
+    public function component(/* ... */): mixed
+    {
+        // TODO: Implement per docs.
+        return null;
+    }
+    /**
+     * composer
+     */
+    public function composer(/* ... */): mixed
+    {
+        // TODO: Implement per docs.
+        return null;
+    }
+    /**
+     * directive
+     */
+    public function directive(/* ... */): mixed
+    {
+        // TODO: Implement per docs.
+        return null;
+    }
+    /**
+     * file
+     */
+    public function file(/* ... */): mixed
+    {
+        // TODO: Implement per docs.
+        return null;
+    }
+    /**
+     * first
+     */
+    public function first(/* ... */): mixed
+    {
+        // TODO: Implement per docs.
+        return null;
+    }
+    /**
+     * renderEach
+     */
+    public function renderEach(/* ... */): mixed
+    {
+        // TODO: Implement per docs.
+        return null;
+    }
 }

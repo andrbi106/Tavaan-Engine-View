@@ -75,4 +75,29 @@ final class View
     {
         return $this->data;
     }
+
+    /**
+     * extends
+     */
+    public function extends(/* ... */): mixed
+    {
+        // TODO: Implement per docs.
+        return null;
+    }
+    /**
+     * nest
+     */
+    public function nest(/* ... */): mixed
+    {
+        // TODO: Implement per docs.
+        return null;
+    }
+    /**
+     * section
+     */
+    public function section(/* ... */): mixed
+    {
+        // TODO: Implement per docs.
+        return null;
+    }
 }
