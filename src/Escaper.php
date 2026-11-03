@@ -4,83 +4,65 @@ declare(strict_types=1);
 
 namespace Tavaan\Engine\View;
 
+use Tavaan\Core\Contracts\Config\RepositoryInterface as Config;
+
 /**
- * تَوان | Tavaan — View
- * Escaper — escape زمینه‌ای HTML/Attr/JS/URL/CSS (DOC-043 §5).
+ * Escaper — پیاده‌سازی اصلی موتور.
  *
- * 🔒 `{{ }}` همیشه از اینجا عبور می‌کند — مگر SafeString.
- *
- * @api 1.0
- * @see docs/03-engines/view.md
+ * @see \Tavaan\Engine\View\Contracts\EscaperInterface
  */
-final class Escaper
+final class Escaper implements Contracts\EscaperInterface
 {
-    private function __construct()
-    {
+    /**
+     * @param Config $config پیکربندی موتور
+     */
+    public function __construct(
+        private readonly Config $config,
+    ) {
     }
 
-    public static function html(mixed $value): string
+    /**
+     * {@inheritdoc}
+     */
+    public function html(/* ... */): mixed
     {
-        // مسیر سریع: رشتهٔ معمول (اکثر فراخوانی‌ها)
-        if (\is_string($value)) {
-            if ($value === '') {
-                return '';
-            }
-            // fast path: strpos×5 (~۰٫۳µs برای ۲KB) — memchr بهینه
-            if (!\str_contains($value, '<') && !\str_contains($value, '&')
-                && !\str_contains($value, '"') && !\str_contains($value, '>')
-                && !\str_contains($value, "'")) {
-                return $value;   // بدون کاراکتر خاص → escape لازم نیست
-            }
-
-            return \htmlspecialchars($value, ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML5, 'UTF-8', false);
-        }
-
-        if ($value === null) {
-            return '';
-        }
-        if ($value instanceof SafeString) {
-            return (string) $value;
-        }
-        if ($value instanceof ComponentAttributeBag) {
-            return $value->toHtml();   // attributeها درون bag escape شده‌اند
-        }
-        if (\is_bool($value)) {
-            return $value ? '1' : '0';
-        }
-        if (\is_int($value) || \is_float($value)) {
-            return (string) $value;
-        }
-        if (\is_array($value) || (\is_object($value) && !$value instanceof \Stringable)) {
-            return \htmlspecialchars(\json_encode($value, JSON_UNESCAPED_UNICODE) ?: '', ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML5, 'UTF-8', false);
-        }
-
-        return \htmlspecialchars((string) $value, ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML5, 'UTF-8', false);
+        // TODO: پیاده‌سازی html مطابق مستندات (سند §3 API).
+        return null;
     }
 
-    public static function attr(mixed $value): string
+    /**
+     * {@inheritdoc}
+     */
+    public function attr(/* ... */): mixed
     {
-        return self::html($value);   // ENT_QUOTES کافی است
+        // TODO: پیاده‌سازی attr مطابق مستندات (سند §3 API).
+        return null;
     }
 
-    /** JSON امن برای داخل <script> (JSON_HEX_* — DOC-043 §5). */
-    public static function js(mixed $value): string
+    /**
+     * {@inheritdoc}
+     */
+    public function js(/* ... */): mixed
     {
-        $json = \json_encode(
-            $value,
-            JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR,
-        );
-
-        return $json === false ? 'null' : $json;
+        // TODO: پیاده‌سازی js مطابق مستندات (سند §3 API).
+        return null;
     }
 
-    public static function url(mixed $value): string
+    /**
+     * {@inheritdoc}
+     */
+    public function url(/* ... */): mixed
     {
-        return $value === null ? '' : \rawurlencode((string) $value);
+        // TODO: پیاده‌سازی url مطابق مستندات (سند §3 API).
+        return null;
     }
 
-    public static function css(mixed $value): string
+    /**
+     * {@inheritdoc}
+     */
+    public function css(/* ... */): mixed
     {
-        return $value === null ? '' : (\preg_replace('/[^a-zA-Z0-9\s\-_#,%.]/', '', (string) $value) ?? '');
+        // TODO: پیاده‌سازی css مطابق مستندات (سند §3 API).
+        return null;
     }
 }

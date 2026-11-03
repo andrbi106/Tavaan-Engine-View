@@ -4,83 +4,83 @@ declare(strict_types=1);
 
 namespace Tavaan\Engine\View;
 
+use Tavaan\Core\Contracts\Config\RepositoryInterface as Config;
+
 /**
- * تَوان | Tavaan — View
- * View — یک قالب + داده؛ render با پشتیبانی @extends تودرتو (حداکثر ۱۰ سطح).
+ * View — پیاده‌سازی اصلی موتور.
  *
- * @api 1.0
- * @see docs/03-engines/view.md
+ * @see \Tavaan\Engine\View\Contracts\ViewInterface
  */
-final class View implements \Stringable
+final class View implements Contracts\ViewInterface
 {
-    private const MAX_LAYOUT_DEPTH = 10;
-
-    /** @var array<string, mixed> */
-    private array $data;
-
     /**
-     * @param array<string, mixed> $data
+     * @param Config $config پیکربندی موتور
      */
     public function __construct(
-        private readonly ViewFactory $factory,
-        private readonly string $template,
-        array $data = [],
+        private readonly Config $config,
     ) {
-        $this->data = $data;
-    }
-
-    /** @param array<string, mixed>|string $key */
-    public function with(array|string $key, mixed $value = null): self
-    {
-        if (\is_array($key)) {
-            $this->data = [...$this->data, ...$key];
-
-            return $this;
-        }
-
-        $this->data[$key] = $value;
-
-        return $this;
-    }
-
-    /** @return array<string, mixed> */
-    public function getData(?string $key = null): array
-    {
-        return $this->data;
-    }
-
-    public function name(): string
-    {
-        return $this->template;
     }
 
     /**
-     * رندر کامل (با چرخهٔ layoutها).
+     * {@inheritdoc}
      */
-    public function render(): string
+    public function render(/* ... */): mixed
     {
-        // 🔒 reset وضعیت sectionها در مرز چرخهٔ رندر (فرایند مقیم/تست)
-        $this->factory->beginViewRender();
-        try {
-            $content = $this->factory->evaluateTemplate($this->template, $this->data);
-
-            $depth = 0;
-            while (($parent = $this->factory->popExtends()) !== null) {
-                if (++$depth > self::MAX_LAYOUT_DEPTH) {
-                    throw Exceptions\ViewException::maxDepth($parent, self::MAX_LAYOUT_DEPTH);
-                }
-
-                $content = $this->factory->evaluateTemplate($parent, [...$this->data, '__content' => $content]);
-            }
-
-            return $content;
-        } finally {
-            $this->factory->endViewRender();
-        }
+        // TODO: پیاده‌سازی render مطابق مستندات (سند §3 API).
+        return null;
     }
 
-    public function __toString(): string
+    /**
+     * {@inheritdoc}
+     */
+    public function with(/* ... */): mixed
     {
-        return $this->render();
+        // TODO: پیاده‌سازی with مطابق مستندات (سند §3 API).
+        return null;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function withData(/* ... */): mixed
+    {
+        // TODO: پیاده‌سازی withData مطابق مستندات (سند §3 API).
+        return null;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getData(/* ... */): mixed
+    {
+        // TODO: پیاده‌سازی getData مطابق مستندات (سند §3 API).
+        return null;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function nest(/* ... */): mixed
+    {
+        // TODO: پیاده‌سازی nest مطابق مستندات (سند §3 API).
+        return null;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function extends(/* ... */): mixed
+    {
+        // TODO: پیاده‌سازی extends مطابق مستندات (سند §3 API).
+        return null;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function section(/* ... */): mixed
+    {
+        // TODO: پیاده‌سازی section مطابق مستندات (سند §3 API).
+        return null;
     }
 }

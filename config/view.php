@@ -2,26 +2,35 @@
 
 declare(strict_types=1);
 
-/*
- * پیکربندی موتور View — DOC-043 §9
+/*|--------------------------------------------------------------------------
+ | View Engine Configuration
+ |--------------------------------------------------------------------------
+ |
+ | پیکربندی موتور view — همهٔ کلیدهای مستندشده در `docs/03-engines/view.md` بخش «پیکربندی».
+ |
+ |@see https://github.com/Derogaramin/Tavaan-Doc/blob/main/docs/03-engines/view.md
  */
 
 return [
-    'paths' => [
-        base_path('resources/views'),
-        base_path('app/views'),
+    /*| پیش‌فرض موتور (driver/store یا حالت فعال) */
+    'default' => env('VIEW_DEFAULT', 'default'),
+
+    /*| کلید کش (در صورت استفاده) */
+    'prefix' => env('VIEW_PREFIX', 'view:'),
+
+    /*| تنظیمات لاگ */
+    'log' => [
+        'channel' => env('VIEW_LOG_CHANNEL', 'view'),
     ],
-    'extension'   => '.tv.php',
-    'compiled'    => storage_path('framework/views'),
-    'cache'       => env_bool('TVN_VIEW_CACHE', false),
-    'auto_escape' => true,           // 🔒 هرگز در prod خاموش نشود
-    'namespaces'  => [],
-    'components'  => [
-        'paths'      => [base_path('resources/views/components')],
-        'namespaces' => ['x' => 'components'],
+
+    /*| Facade */
+    'facade' => [
+        'name' => 'View',
+        'accessor' => 'view',
     ],
-    'directives' => [],
-    'shared'     => [],
-    'max_depth'  => 10,
-    'hmvc'       => ['max_depth' => 4, 'isolate_errors' => true],
+
+    /*| سایر کلیدها (طبق مستندات) */
+    'options' => [
+        // TODO: کلیدهای اضافی طبق سند §۶ (پیکربندی)
+    ],
 ];
