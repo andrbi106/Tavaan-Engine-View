@@ -9,7 +9,7 @@ use Tavaan\Core\Contracts\Console\CommandInterface;
 /**
  * view:clear command.
  */
-final class View_clearCommand implements CommandInterface
+final class ViewClearCommand implements CommandInterface
 {
     public function name(): string
     {

@@ -7,18 +7,18 @@ namespace Tavaan\Engine\View\Console;
 use Tavaan\Core\Contracts\Console\CommandInterface;
 
 /**
- * view:directives command.
+ * view:cache command.
  */
-final class View_directivesCommand implements CommandInterface
+final class ViewCacheCommand implements CommandInterface
 {
     public function name(): string
     {
-        return 'view:directives';
+        return 'view:cache';
     }
 
     public function description(): string
     {
-        return 'Run view:directives (TODO: fill description).';
+        return 'Run view:cache (TODO: fill description).';
     }
 
     public function handle(array $args = []): int
