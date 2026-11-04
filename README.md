@@ -2,6 +2,8 @@
 
 > **قالب‌ساز** — موتور View در فریمورک تَوان
 
+این موتور از کلاس پایهٔ `Engine` (در [Tavaan-Engine-Core](https://github.com/andrbi106/Tavaan-Engine-Core)) ارث می‌برد.
+
 ## مشخصات
 
 | فیلد | مقدار |
@@ -11,65 +13,60 @@
 | عنوان فارسی | قالب‌ساز |
 | نسخه | `0.1.0` |
 | namespace | `Tavaan\Engine\View` |
-| نوع | `engine` |
-| Facade | `View` (accessor: `view`) |
+| کلاس موتور | `Tavaan\Engine\View\ViewEngine` |
+| Facade | View (`view`) |
 
-## خطاها (Exceptions)
+## کلاس موتور
 
-- `Tavaan\Engine\View\Exceptions\ViewException`
+```php
+namespace Tavaan\Engine\View;
 
-## Facadeها
+use Tavaan\EngineCore\Engine as BaseEngine;
+use Tavaan\EngineCore\Contracts\EngineManifestInterface;
 
-- `Tavaan\Engine\View\Facades\View`
+final class ViewEngine extends BaseEngine
+{
+    public function __construct(EngineManifestInterface $manifest)
+    {
+        parent::__construct($manifest);
+    }
 
-## کلاس‌های اصلی
+    public function register(ContainerInterface $container): void
+    {
+        parent::register($container);
+        // bindingهای اختصاصی موتور
+    }
 
-- `src/ComponentAttributeBag.php`
-- `src/Console/ViewCacheCommand.php`
-- `src/Console/ViewClearCommand.php`
-- `src/DirectiveRegistry.php`
-- `src/Escaper.php`
-- `src/SafeString.php`
-- `src/TemplateCompiler.php`
-- `src/View.php`
-- `src/ViewFactory.php`
-- `src/ViewFinder.php`
-- `src/ViewServiceProvider.php`
+    public function boot(): void
+    {
+        parent::boot();
+    }
+}
+```
+
+**فایل:** `src/ViewEngine.php`
+
+## وابستگی‌ها
+
+**موتورهای مورد‌نیاز:** `event`, `i18n`, `config`
 
 ## Service Providerها
 
 - `Tavaan\Engine\View\ViewServiceProvider`
 
-## وابستگی‌ها
+## سه درگاه ارتباط با سایر موتورها
 
-**موتورهای مورد‌نیاز:**
-
-- `event`
-- `i18n`
-- `config`
-
-## پیکربندی
-
-- فایل پیکربندی: `config/view.php`
-- کلید: `view`
+| درگاه | الگو | متدهای convenience |
+|---|---|---|
+| Container | pull-based DI | `make()`, `bound()` |
+| Events | pub/sub | `dispatch()`, `listen()` |
+| EngineBus | point-to-point RPC | `call()`, `offer()` |
 
 ## نصب
 
 ```bash
 git clone https://github.com/andrbi106/Tavaan-Engine-View.git
 ```
-
-این موتور بخشی از فریمورک تَوان است و معمولاً به‌صورت مستقیم نصب نمی‌شود،
-بلکه توسط [Tavaan-Core](https://github.com/andrbi106/Tavaan-Core) مدیریت می‌شود.
-
-## روابط با سایر مخازن
-
-| مخزن | نقش |
-|---|---|
-| **`andrbi106/Tavaan-Engine-View`** (این مخزن) | موتور View |
-| `andrbi106/Tavaan-Engine-Core` | ساختار پایه + درگاه ارتباط موتورها |
-| `andrbi106/Tavaan-Core` | اسکلت اپلیکیشن + همهٔ موتورها |
-| `Derogaramin/Tavaan-Framework` | فریمورک مادر (monorepo) |
 
 ## مجوز
 

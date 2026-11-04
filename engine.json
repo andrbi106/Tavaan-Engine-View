@@ -15,7 +15,11 @@
   ],
   "requires": {
     "php": ">=8.2",
-    "engines": ["event", "i18n", "config"]
+    "engines": [
+      "event",
+      "i18n",
+      "config"
+    ]
   },
   "config": {
     "file": "config/view.php",
@@ -27,5 +31,6 @@
     "name": "View",
     "accessor": "view"
   },
-  "docs": "docs/03-engines/view.md"
+  "docs": "docs/03-engines/view.md",
+  "class": "Tavaan\\Engine\\View\\ViewEngine"
 }
